@@ -1,0 +1,17 @@
+{
+  "overview": "A coffee-shop ordering app with a customer storefront and a separate staff admin area.",
+  "features": [
+    "Browse the menu and place orders as a customer",
+    "Track orders and pay via GCash, Maya, or cash",
+    "Separate staff sign-in portal for admins",
+    "Manage menu, orders, and payment settings as an admin"
+  ],
+  "category": "food-ordering",
+  "tags": [
+    "coffee",
+    "ordering",
+    "restaurant",
+    "admin"
+  ],
+  "last_updated": "2026-09-22T02:41:50.508Z"
+}

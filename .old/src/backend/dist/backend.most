@@ -1,0 +1,242 @@
+// Version: 4.0.0
+type AccessControlState__201339279 =
+  {
+    var adminAssigned : Bool;
+    userRoles : Map__230067015<Principal, UserRole__91647283>
+  };
+type AddOn__794312597 =
+  {available : Bool; id : Nat; name : Text; price : Nat};
+type AddOn__96944308 =
+  {
+    available : Bool;
+    id : Id__389469852;
+    name : Text;
+    price : Centavos__32597444
+  };
+type Category__227350253 = {id : Id__389469852; name : Text; sortOrder : Nat};
+type Category__689019844 = {id : Nat; name : Text; sortOrder : Nat};
+type Centavos__32597444 = Nat;
+type CustomerInfo__1031732015 =
+  {email : Text; fullName : Text; mobileNumber : Text};
+type CustomerInfo__740534964 =
+  {email : Text; fullName : Text; mobileNumber : Text};
+type Data__44217153<K, V> = {var count : Nat__227979830; kvs : [var ?(K, V)]};
+type DineInDetails__436674041 = {numberOfCustomers : Nat; tableNumber : Text};
+type DineInDetails__943797223 = {numberOfCustomers : Nat; tableNumber : Text};
+type ExternalBlob__220559234 = Blob;
+type FileRef__939992998 = ExternalBlob__220559234;
+type Id__389469852 = Nat;
+type Internal__283199666<K, V> =
+  {children : [var ?Node__204828119<K, V>]; data : Data__44217153<K, V>};
+type Leaf__598469445<K, V> = {data : Data__44217153<K, V>};
+type LineCustomization__789233741 =
+  {
+    addOnIds : [Id__389469852];
+    iceLevel : ?Text;
+    milkOption : ?Text;
+    sizeId : ?Id__389469852;
+    sugarLevel : ?Text
+  };
+type LineCustomization__81842568 =
+  {
+    addOnIds : [Nat];
+    iceLevel : ?Text;
+    milkOption : ?Text;
+    sizeId : ?Nat;
+    sugarLevel : ?Text
+  };
+type Map__230067015<K, V> = Map__405889023<K, V>;
+type Map__405889023<K, V> = Map__603270868<K, V>;
+type Map__603270868<K, V> =
+  {var root : Node__204828119<K, V>; var size : Nat__227979830};
+type Nat__227979830 = Nat__920180692;
+type Nat__920180692 = Nat;
+type NewActor__285868754 =
+  {
+    accessControlState : AccessControlState__201339279;
+    addOns : Map__230067015<Nat, AddOn__794312597>;
+    categories : Map__230067015<Nat, Category__689019844>;
+    counters :
+      {var nextMenuId : Nat; var nextOrderSeq : Nat; var orderDate : Text};
+    orders : Map__230067015<Text, Order__154168104>;
+    paymentSettings : {var settings : PaymentSettings__439654265};
+    products : Map__230067015<Nat, Product__524578397>;
+    sizeOptions : Map__230067015<Nat, SizeOption__871612373>
+  };
+type Node__204828119<K, V> =
+  {#internal : Internal__283199666<K, V>; #leaf : Leaf__598469445<K, V>};
+type OldActor__536754846 = {};
+type OrderItem__241319351 =
+  {
+    customization : LineCustomization__789233741;
+    lineTotal : Centavos__32597444;
+    productId : Id__389469852;
+    productName : Text;
+    quantity : Nat;
+    unitPrice : Centavos__32597444
+  };
+type OrderItem__483412186 =
+  {
+    customization : LineCustomization__81842568;
+    lineTotal : Nat;
+    productId : Nat;
+    productName : Text;
+    quantity : Nat;
+    unitPrice : Nat
+  };
+type OrderStatus__1575301 =
+  {
+    #cancelled;
+    #completed;
+    #orderConfirmed;
+    #orderReceived;
+    #paymentVerification;
+    #preparing;
+    #readyForPickup
+  };
+type OrderStatus__272730104 =
+  {
+    #cancelled;
+    #completed;
+    #orderConfirmed;
+    #orderReceived;
+    #paymentVerification;
+    #preparing;
+    #readyForPickup
+  };
+type OrderType__209401566 = {#dineIn; #takeOut};
+type OrderType__759099827 = {#dineIn; #takeOut};
+type Order__141779993 =
+  {
+    createdAt : Timestamp__301639476;
+    customer : CustomerInfo__740534964;
+    dineIn : ?DineInDetails__943797223;
+    items : [OrderItem__241319351];
+    orderNumber : Text;
+    orderType : OrderType__209401566;
+    payment : PaymentInfo__944757716;
+    serviceFee : Centavos__32597444;
+    specialInstructions : Text;
+    status : OrderStatus__272730104;
+    subtotal : Centavos__32597444;
+    takeOut : ?TakeOutDetails__503967648;
+    total : Centavos__32597444;
+    updatedAt : Timestamp__301639476
+  };
+type Order__154168104 =
+  {
+    createdAt : Nat;
+    customer : CustomerInfo__1031732015;
+    dineIn : ?DineInDetails__436674041;
+    items : [OrderItem__483412186];
+    orderNumber : Text;
+    orderType : OrderType__759099827;
+    payment : PaymentInfo__140008886;
+    serviceFee : Nat;
+    specialInstructions : Text;
+    status : OrderStatus__1575301;
+    subtotal : Nat;
+    takeOut : ?TakeOutDetails__814030806;
+    total : Nat;
+    updatedAt : Nat
+  };
+type PaymentInfo__140008886 =
+  {
+    method : PaymentMethod__352287619;
+    proof : ?StoredFile__248046673;
+    referenceNumber : ?Text
+  };
+type PaymentInfo__944757716 =
+  {
+    method : PaymentMethod__972042942;
+    proof : ?StoredFile__551185736;
+    referenceNumber : ?Text
+  };
+type PaymentMethod__352287619 = {#cash; #gcash; #maya};
+type PaymentMethod__972042942 = {#cash; #gcash; #maya};
+type PaymentSettings__439654265 =
+  {
+    gcashNumber : Text;
+    gcashQr : ?StoredFile__248046673;
+    mayaNumber : Text;
+    mayaQr : ?StoredFile__248046673
+  };
+type PaymentSettings__585501411 =
+  {
+    gcashNumber : Text;
+    gcashQr : ?StoredFile__551185736;
+    mayaNumber : Text;
+    mayaQr : ?StoredFile__551185736
+  };
+type Product__524578397 =
+  {
+    addOnIds : [Nat];
+    available : Bool;
+    categoryId : Nat;
+    description : Text;
+    id : Nat;
+    image : ?StoredFile__248046673;
+    name : Text;
+    price : Nat;
+    sizeOptionIds : [Nat]
+  };
+type Product__986497020 =
+  {
+    addOnIds : [Id__389469852];
+    available : Bool;
+    categoryId : Id__389469852;
+    description : Text;
+    id : Id__389469852;
+    image : ?StoredFile__551185736;
+    name : Text;
+    price : Centavos__32597444;
+    sizeOptionIds : [Id__389469852]
+  };
+type SizeOption__407341032 =
+  {id : Id__389469852; name : Text; surcharge : Centavos__32597444};
+type SizeOption__871612373 = {id : Nat; name : Text; surcharge : Nat};
+type StoredFile__248046673 = {blob : Blob; filename : Text; mimeType : Text};
+type StoredFile__551185736 =
+  {blob : FileRef__939992998; filename : Text; mimeType : Text};
+type TakeOutDetails__503967648 = {pickupTime : Text};
+type TakeOutDetails__814030806 = {pickupTime : Text};
+type Timestamp__301639476 = Nat;
+type UserRole__91647283 = {#admin; #guest; #user};
+{
+  "20260922_010000" : (_old : OldActor__536754846) -> NewActor__285868754
+}
+actor  {
+  stable accessControlState :
+    {
+      var adminAssigned : Bool;
+      userRoles : Map__230067015<Principal, UserRole__91647283>
+    };
+  stable addOns :
+    {
+      var root : Node__204828119<Nat, AddOn__96944308>;
+      var size : Nat__227979830
+    };
+  stable categories :
+    {
+      var root : Node__204828119<Nat, Category__227350253>;
+      var size : Nat__227979830
+    };
+  stable counters :
+    {var nextMenuId : Nat; var nextOrderSeq : Nat; var orderDate : Text};
+  stable orders :
+    {
+      var root : Node__204828119<Text, Order__141779993>;
+      var size : Nat__227979830
+    };
+  stable paymentSettings : {var settings : PaymentSettings__585501411};
+  stable products :
+    {
+      var root : Node__204828119<Nat, Product__986497020>;
+      var size : Nat__227979830
+    };
+  stable sizeOptions :
+    {
+      var root : Node__204828119<Nat, SizeOption__407341032>;
+      var size : Nat__227979830
+    }
+};

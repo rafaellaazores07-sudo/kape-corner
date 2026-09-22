@@ -1,0 +1,372 @@
+type _ImmutableObjectStorageRefillResult = 
+ record {
+   success: opt bool;
+   topped_up_amount: opt nat;
+ };
+type _ImmutableObjectStorageRefillInformation = record {
+                                                  proposed_top_up_amount:
+                                                   opt nat;};
+type _ImmutableObjectStorageCreateCertificateResult = 
+ record {
+   blob_hash: text;
+   method: text;
+ };
+type Value = 
+ variant {
+   "bool": bool;
+   float: float64;
+   "int": int;
+   "nat": nat;
+   "null";
+   "text": text;
+ };
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type Timestamp = nat;
+type TakeOutDetails = record {pickupTime: text;};
+type StoredFile = 
+ record {
+   "blob": FileRef;
+   filename: text;
+   mimeType: text;
+ };
+type SizeOptionInput = 
+ record {
+   name: text;
+   surcharge: Centavos;
+ };
+type SizeOption = 
+ record {
+   id: Id;
+   name: text;
+   surcharge: Centavos;
+ };
+type Result__1 = 
+ record {
+   hasMore: bool;
+   rows: vec vec Cell;
+ };
+type Result_2 = 
+ variant {
+   err: Error;
+   ok;
+ };
+type Result_1 = 
+ variant {
+   err: OrderError;
+   ok: text;
+ };
+type Result = 
+ variant {
+   err: OrderError;
+   ok: Order;
+ };
+type ProductInput = 
+ record {
+   addOnIds: vec Id;
+   available: bool;
+   categoryId: Id;
+   description: text;
+   image: opt StoredFile;
+   name: text;
+   price: Centavos;
+   sizeOptionIds: vec Id;
+ };
+type Product = 
+ record {
+   addOnIds: vec Id;
+   available: bool;
+   categoryId: Id;
+   description: text;
+   id: Id;
+   image: opt StoredFile;
+   name: text;
+   price: Centavos;
+   sizeOptionIds: vec Id;
+ };
+type PlaceOrderInput = 
+ record {
+   customer: CustomerInfo;
+   dineIn: opt DineInDetails;
+   items: vec OrderItem;
+   orderType: OrderType;
+   payment: PaymentInfo;
+   specialInstructions: text;
+   takeOut: opt TakeOutDetails;
+ };
+type PaymentSettingsInput = 
+ record {
+   gcashNumber: text;
+   gcashQr: opt StoredFile;
+   mayaNumber: text;
+   mayaQr: opt StoredFile;
+ };
+type PaymentSettings = 
+ record {
+   gcashNumber: text;
+   gcashQr: opt StoredFile;
+   mayaNumber: text;
+   mayaQr: opt StoredFile;
+ };
+type PaymentMethod = 
+ variant {
+   cash;
+   gcash;
+   maya;
+ };
+type PaymentInfo = 
+ record {
+   method: PaymentMethod;
+   proof: opt StoredFile;
+   referenceNumber: opt text;
+ };
+type OrderType = 
+ variant {
+   dineIn;
+   takeOut;
+ };
+type OrderSummary = 
+ record {
+   createdAt: Timestamp;
+   customerName: text;
+   orderNumber: text;
+   orderType: OrderType;
+   paymentMethod: PaymentMethod;
+   status: OrderStatus;
+   total: Centavos;
+ };
+type OrderStatus = 
+ variant {
+   cancelled;
+   completed;
+   orderConfirmed;
+   orderReceived;
+   paymentVerification;
+   preparing;
+   readyForPickup;
+ };
+type OrderItem = 
+ record {
+   customization: LineCustomization;
+   lineTotal: Centavos;
+   productId: Id;
+   productName: text;
+   quantity: nat;
+   unitPrice: Centavos;
+ };
+type OrderFilter = 
+ record {
+   orderType: opt OrderType;
+   status: opt OrderStatus;
+ };
+type OrderError = 
+ variant {
+   emptyCart;
+   invalidCustomerInfo: text;
+   invalidOrderType: text;
+   invalidPayment: text;
+   invalidStatusTransition: record {
+                              from: OrderStatus;
+                              to: OrderStatus;
+                            };
+   notAuthorized;
+   productUnavailable: Id;
+   unknownOrder: text;
+   unknownProduct: Id;
+ };
+type Order = 
+ record {
+   createdAt: Timestamp;
+   customer: CustomerInfo;
+   dineIn: opt DineInDetails;
+   items: vec OrderItem;
+   orderNumber: text;
+   orderType: OrderType;
+   payment: PaymentInfo;
+   serviceFee: Centavos;
+   specialInstructions: text;
+   status: OrderStatus;
+   subtotal: Centavos;
+   takeOut: opt TakeOutDetails;
+   total: Centavos;
+   updatedAt: Timestamp;
+ };
+type Menu = 
+ record {
+   addOns: vec AddOn;
+   categories: vec Category;
+   products: vec Product;
+   sizes: vec SizeOption;
+ };
+type LineCustomization = 
+ record {
+   addOnIds: vec Id;
+   iceLevel: opt text;
+   milkOption: opt text;
+   sizeId: opt Id;
+   sugarLevel: opt text;
+ };
+type Id = nat;
+type FileRef = blob;
+type Error = 
+ variant {
+   AmbiguousAttribute: record {
+                         field: text;
+                         sources: vec text;
+                       };
+   FrontendOriginMismatch: record {
+                             expected: vec text;
+                             got: text;
+                           };
+   FrontendOriginsNotConfigured;
+   MalformedCandid;
+   MissingField: text;
+   MixedSsoSources: record {
+                      otherKeys: vec text;
+                      ssoKeys: vec text;
+                    };
+   NoAttributes;
+   Stale: record {ageNs: nat;};
+   UnknownNonce;
+   UntrustedSsoSource: record {domain: text;};
+ };
+type DineInDetails = 
+ record {
+   numberOfCustomers: nat;
+   tableNumber: text;
+ };
+type DashboardStats = 
+ record {
+   completedOrders: nat;
+   pendingOrders: nat;
+   todaysSales: Centavos;
+   totalOrders: nat;
+   totalSales: Centavos;
+ };
+type CustomerInfo = 
+ record {
+   email: text;
+   fullName: text;
+   mobileNumber: text;
+ };
+type Centavos = nat;
+type Cell = 
+ record {
+   name: text;
+   value: Value;
+ };
+type CategoryInput = 
+ record {
+   name: text;
+   sortOrder: nat;
+ };
+type Category = 
+ record {
+   id: Id;
+   name: text;
+   sortOrder: nat;
+ };
+type CallerRole = 
+ variant {
+   admin;
+   anonymous;
+   customer;
+ };
+type AddOnInput = 
+ record {
+   available: bool;
+   name: text;
+   price: Centavos;
+ };
+type AddOn = 
+ record {
+   available: bool;
+   id: Id;
+   name: text;
+   price: Centavos;
+ };
+service : {
+  _immutableObjectStorageBlobsAreLive: (hashes: vec blob) -> (vec bool) query;
+  _immutableObjectStorageBlobsToDelete: () -> (vec blob) query;
+  _immutableObjectStorageConfirmBlobDeletion: (blobs: vec blob) -> ();
+  _immutableObjectStorageCreateCertificate: (blobHash: text) ->
+   (_ImmutableObjectStorageCreateCertificateResult);
+  _immutableObjectStorageRefillCashier: (refillInformation:
+   opt _ImmutableObjectStorageRefillInformation) ->
+   (_ImmutableObjectStorageRefillResult);
+  _immutableObjectStorageUpdateGatewayPrincipals: () -> ();
+  _initialize_access_control: () -> ();
+  _internet_identity_sign_in_finish: () -> (Result_2);
+  _internet_identity_sign_in_start: () -> (blob);
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  /// Admin: cancel an order.
+  cancelOrder: (orderNumber: text) -> (Result);
+  /// Admin: create an add-on.
+  createAddOn: (input: AddOnInput) -> (Id);
+  /// Admin: create a category.
+  createCategory: (input: CategoryInput) -> (Id);
+  /// Admin: create a product.
+  createProduct: (input: ProductInput) -> (Id);
+  /// Admin: create a size option.
+  createSizeOption: (input: SizeOptionInput) -> (Id);
+  /// Admin: delete an add-on.
+  deleteAddOn: (id: Id) -> (bool);
+  /// Admin: delete a category.
+  deleteCategory: (id: Id) -> (bool);
+  /// Admin: delete a product.
+  deleteProduct: (id: Id) -> (bool);
+  /// Admin: delete a size option.
+  deleteSizeOption: (id: Id) -> (bool);
+  execute: (qJson: text) -> (Result__1) query;
+  /// Static Markdown documentation of this backend's public API.
+  getApiDoc: () -> (text) query;
+  /// Resolve the caller's audience for role-aware routing.
+  /// 
+  /// Never traps: an anonymous or not-yet-registered caller resolves to
+  /// `#anonymous`, a registered customer to `#customer`, and a registered
+  /// staff account to `#admin`.
+  getCallerRole: () -> (CallerRole) query;
+  getCallerUserRole: () -> (UserRole) query;
+  /// Admin: dashboard counters.
+  getDashboardStats: () -> (DashboardStats) query;
+  /// Public storefront menu.
+  getMenu: () -> (Menu) query;
+  /// Track an order by its order number.
+  getOrder: (orderNumber: text) -> (opt Order) query;
+  /// Public: configurable shop payment settings.
+  getPaymentSettings: () -> (PaymentSettings) query;
+  /// Public product lookup.
+  getProduct: (id: Id) -> (opt Product) query;
+  isCallerAdmin: () -> (bool) query;
+  /// Admin: list orders, optionally filtered.
+  listOrders: (filter: OrderFilter) -> (vec OrderSummary) query;
+  /// Place an order. Open to any caller, including anonymous guests.
+  placeOrder: (input: PlaceOrderInput) -> (Result_1);
+  /// Register the caller as a customer account.
+  /// 
+  /// This is the customer portal's registration path. It always assigns the
+  /// `#user` role, so a customer signing in first can never claim the shop's
+  /// admin account — only the staff portal's `_initialize_access_control`
+  /// path can promote the first sign-in to `#admin`. Calling it again for an
+  /// already-registered caller is a no-op.
+  registerCustomer: () -> ();
+  schema: () -> (text) query;
+  /// Admin: update an add-on.
+  updateAddOn: (id: Id, input: AddOnInput) -> (bool);
+  /// Admin: update a category.
+  updateCategory: (id: Id, input: CategoryInput) -> (bool);
+  /// Admin: change an order's status.
+  updateOrderStatus: (orderNumber: text, status: OrderStatus) -> (Result);
+  /// Admin: update shop payment settings.
+  updatePaymentSettings: (input: PaymentSettingsInput) -> (PaymentSettings);
+  /// Admin: update a product.
+  updateProduct: (id: Id, input: ProductInput) -> (bool);
+  /// Admin: update a size option.
+  updateSizeOption: (id: Id, input: SizeOptionInput) -> (bool);
+  /// Admin: verify a GCash/Maya payment.
+  verifyPayment: (orderNumber: text) -> (Result);
+}
